@@ -59,13 +59,13 @@ jobs:
           HEAD_B64="PG1ldGEgY2hhcnNldD0idXRmLTgiPgo8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEiPgo8dGl0bGU+e3sgaWYgLklzSG9tZSB9fXt7IHNpdGUuUGFyYW1zLmF1dGhvcl9uYW1lIH19e3sgd2l0aCBzaXRlLlBhcmFtcy5hdXRob3Jfc3VybmFtZSB9fSB7eyAuIH19e3sgZW5kIH19e3sgd2l0aCBzaXRlLlBhcmFtcy5hdXRob3JfZ3JhZGUgfX0gLSB7eyAuIH19e3sgZW5kIH19e3sgZWxzZSB9fXt7IC5UaXRsZSB9fSB8IHt7IHNpdGUuUGFyYW1zLmF1dGhvcl9uYW1lIH19e3sgZW5kIH19PC90aXRsZT4KPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJ7eyAiY3NzL21haW4uY3NzIiB8IHJlbFVSTCB9fSI+Cg=="
           
           # layouts/partials/site-header.html
-          SITEHEADER_B64="PG5hdiBjbGFzcz0ic2l0ZS1uYXYiPgogIDxhIGhyZWY9Ii8iIGNsYXNzPSJzaXRlLW5hdl9fbG9nbyI+e3sgc2l0ZS5QYXJhbXMuYXV0aG9yX25hbWUgfX08L2E+CjwvbmF2Pgo="
+          SITEHEADER_B64="PG5hdiBjbGFzcz0ic2l0ZS1uYXYiPgogIDxhIGhyZWY9Int7ICIvIiB8IHJlbFVSTCB9fSIgY2xhc3M9InNpdGUtbmF2X19sb2dvIj57eyBzaXRlLlBhcmFtcy5hdXRob3JfbmFtZSB9fTwvYT4KPC9uYXY+Cg=="
           
           # layouts/partials/career-section.html
-          CAREER_B64="e3sgaWYgc2l0ZS5QYXJhbXMuY2FyZWVyIH19CjxzZWN0aW9uIGNsYXNzPSJjYXJlZXItc2VjdGlvbiBwb3J0Zm9saW8tY29udGVudCI+CiAgPGgyPkNhcmVlcjwvaDI+CiAge3sgcmFuZ2Ugc2l0ZS5QYXJhbXMuY2FyZWVyLml0ZW1zIH19CiAgPGRpdiBjbGFzcz0iY2FyZWVyLWl0ZW0iPgogICAgPGgzPnt7IC5jb21wYW55IH19IC0ge3sgLnJvbGUgfX08L2gzPgogICAgPHA+e3sgLnN0YXJ0IH19IC0ge3sgLmVuZCB9fTwvcD4KICAgIDxwPnt7IC5kZXNjcmlwdGlvbiB9fTwvcD4KICA8L2Rpdj4KICB7eyBlbmQgfX0KPC9zZWN0aW9uPgp7eyBlbmQgfX0K"
+          CAREER_B64="e3sgaWYgc2l0ZS5QYXJhbXMuY2FyZWVyIH19CjxzZWN0aW9uIGNsYXNzPSJjYXJlZXItc2VjdGlvbiBwb3J0Zm9saW8tY29udGVudCI+CiAgPGgyPtCa0LDRgNGM0LXRgNCwPC9oMj4KICB7eyByYW5nZSBzaXRlLlBhcmFtcy5jYXJlZXIuaXRlbXMgfX0KICA8ZGl2IGNsYXNzPSJjYXJlZXItaXRlbSI+CiAgICA8aDM+e3sgLmNvbXBhbnkgfX0gLSB7eyAucm9sZSB9fTwvaDM+CiAgICA8cD57eyAuc3RhcnQgfX0gLSB7eyAuZW5kIH19PC9wPgogICAgPHA+e3sgLmRlc2NyaXB0aW9uIH19PC9wPgogIDwvZGl2PgogIHt7IGVuZCB9fQo8L3NlY3Rpb24+Cnt7IGVuZCB9fQo="
           
           # layouts/partials/education-section.html
-          EDUCATION_B64="e3sgaWYgc2l0ZS5QYXJhbXMuZWR1Y2F0aW9uIH19CjxzZWN0aW9uIGNsYXNzPSJlZHVjYXRpb24tc2VjdGlvbiBwb3J0Zm9saW8tY29udGVudCI+CiAgPGgyPkVkdWNhdGlvbjwvaDI+CiAge3sgcmFuZ2Ugc2l0ZS5QYXJhbXMuZWR1Y2F0aW9uLnVuaXZlcnNpdGllcyB9fQogIDxkaXYgY2xhc3M9ImVkdWNhdGlvbi1pdGVtIj4KICAgIDxoMz57eyAubmFtZSB9fTwvaDM+CiAgICA8cD57eyAuZGVncmVlIH19IC0ge3sgLnNwZWNpYWxpdHkgfX08L3A+CiAgICA8cD57eyAueWVhciB9fTwvcD4KICA8L2Rpdj4KICB7eyBlbmQgfX0KPC9zZWN0aW9uPgp7eyBlbmQgfX0K"
+          EDUCATION_B64="e3sgaWYgc2l0ZS5QYXJhbXMuZWR1Y2F0aW9uIH19CjxzZWN0aW9uIGNsYXNzPSJlZHVjYXRpb24tc2VjdGlvbiBwb3J0Zm9saW8tY29udGVudCI+CiAgPGgyPtCe0LHRgNCw0LfQvtCy0LDQvdC40LU8L2gyPgogIHt7IHJhbmdlIHNpdGUuUGFyYW1zLmVkdWNhdGlvbi51bml2ZXJzaXRpZXMgfX0KICA8ZGl2IGNsYXNzPSJlZHVjYXRpb24taXRlbSI+CiAgICA8aDM+e3sgLm5hbWUgfX08L2gzPgogICAgPHA+e3sgLmRlZ3JlZSB9fSAtIHt7IC5zcGVjaWFsaXR5IH19PC9wPgogICAgPHA+e3sgLnllYXIgfX08L3A+CiAgPC9kaXY+CiAge3sgZW5kIH19Cjwvc2VjdGlvbj4Ke3sgZW5kIH19Cg=="
           
           # Create templates if missing
           if [ ! -f layouts/index.html ]; then
@@ -111,6 +111,122 @@ jobs:
           echo ""
           echo "📁 Final layouts structure:"
           find layouts -type f -name "*.html" | head -20
+      - name: Ensure CSS file exists
+        run: |
+          mkdir -p static/css
+          if [ ! -f static/css/main.css ]; then
+            echo "⚠️ WARNING: static/css/main.css not found, creating from template..."
+            # Try to get CSS from template repo (public access)
+            curl -sL "https://raw.githubusercontent.com/ruslanshgd/iziPortfolio-template/main/static/css/main.css" > static/css/main.css || {
+              echo "⚠️ Could not fetch CSS from template, creating minimal CSS..."
+              cat > static/css/main.css << 'EOFCSS'
+/* Minimal portfolio CSS */
+:root {
+  --container-max: 1360px;
+  --content-max: 1140px;
+  --gap: 24px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+.portfolio-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gap);
+}
+.portfolio-content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+.site-header, .site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.site-nav {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.site-nav__logo {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: inherit;
+  text-decoration: none;
+}
+.site-nav__logo:hover { text-decoration: underline; }
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 3rem 0;
+}
+.home-hero__title {
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 1.25rem;
+}
+.home-hero__intro-text {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #333;
+}
+.home-hero__intro-image img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.career-section, .education-section {
+  padding: 3rem 0;
+}
+.career-section h2, .education-section h2 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  margin: 0 0 2rem;
+}
+.career-item, .education-item {
+  padding: 2rem 0;
+  border-top: 1px solid #eee;
+}
+.career-item:first-of-type, .education-item:first-of-type {
+  border-top: none;
+}
+.career-item h3, .education-item h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+.career-item p, .education-item p {
+  margin: 0 0 0.5rem;
+  color: #333;
+}
+@media (min-width: 768px) {
+  .home-hero {
+    flex-direction: row;
+    align-items: center;
+  }
+  .career-item {
+    display: grid;
+    grid-template-columns: minmax(0, 0.4fr) 1fr;
+    gap: 3rem;
+  }
+}
+EOFCSS
+            }
+            echo "✅ Created static/css/main.css"
+          else
+            echo "✅ static/css/main.css found"
+          fi
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
