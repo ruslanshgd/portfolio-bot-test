@@ -4,18 +4,18 @@ languageCode = "ru-ru"
 defaultContentLanguage = "ru"
 
 [params]
+  description = "Кейсы и портфолио"
+  author_name = "Руслан"
+  author_surname = "Шарипов"
   author_grade = "старший продуктовый дизайнер"
   author_city = "Санкт-Петербург"
-  author_surname = "Шарипов"
-  author_name = "Руслан"
-  description = "Кейсы и портфолио"
   author_intro = "👋🏻, я проектирую цифровые продукты с учетом болей пользователей и бизнеса."
   author_image = "/images/author.jpg"
   author_email = "ruslanshgd@gmail.com"
   author_telegram = "https://t.me/easyaboutdesign"
   author_linkedin = "https://www.linkedin.com/in/ruslan-sharipov/"
   author_dribbble = ""
-  author_behance = "https://www.behance.net/ruslansh"
+  author_behance = ""
   author_cv = "https://drive.google.com/file/d/17-WqbIrYUbzBeoUAbawsEdOcYIFguWre/view?usp=sharing"
 
   [params.education]
@@ -23,14 +23,14 @@ defaultContentLanguage = "ru"
   [[params.education.courses]]
     title = "Product Heroes"
     url = "https://heroes.camp/"
-    provider = "Илья Красинский"
+    provider = "от Ильи Красинского"
     status = "2023"
 
   [[params.education.universities]]
     name = "СПбГУПТД"
     year = "2016"
-    speciality = "Графический дизайн"
-    degree = "Специалитет"
+    speciality = "Граф дизайн"
+    degree = "Специалист"
 
   [params.career]
 
