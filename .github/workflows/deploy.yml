@@ -136,6 +136,16 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Verify static files before build
+        run: |
+          echo "Checking static/images directory:"
+          ls -la static/images/ 2>/dev/null || echo "⚠️ static/images/ directory not found"
+          echo ""
+          echo "Checking for author.jpg in static:"
+          ls -la static/images/author.jpg 2>/dev/null || echo "⚠️ static/images/author.jpg not found"
+          echo ""
+          echo "Checking static/css directory:"
+          ls -la static/css/ 2>/dev/null || echo "⚠️ static/css/ directory not found"
       - name: Verify build output
         run: |
           echo "Checking public directory contents:"
@@ -143,6 +153,15 @@ jobs:
           echo ""
           echo "Checking for index.html:"
           ls -la public/index.html || echo "ERROR: index.html not found!"
+          echo ""
+          echo "Checking for images directory in public:"
+          ls -la public/images/ 2>/dev/null || echo "⚠️ public/images/ directory not found"
+          echo ""
+          echo "Checking for author.jpg in public:"
+          ls -la public/images/author.jpg 2>/dev/null || echo "⚠️ public/images/author.jpg not found - Hugo should copy from static/"
+          echo ""
+          echo "Checking for CSS in public:"
+          ls -la public/css/main.css 2>/dev/null || echo "⚠️ public/css/main.css not found"
           echo ""
           echo "Checking for index.xml:"
           ls -la public/index.xml || echo "index.xml not found"
@@ -152,6 +171,12 @@ jobs:
           echo ""
           echo "First 5 lines of index.html:"
           head -5 public/index.html 2>/dev/null || echo "index.html not readable"
+          echo ""
+          echo "Checking image path in index.html:"
+          grep -o 'src="[^"]*author[^"]*"' public/index.html || echo "⚠️ author image path not found in HTML"
+          echo ""
+          echo "Checking header link in index.html:"
+          grep -o 'href="[^"]*"[^>]*site-header\|site-nav' public/index.html | head -3 || echo "⚠️ header link not found in HTML"
           echo ""
           echo "Verifying index.html is valid HTML:"
           if head -1 public/index.html | grep -qi "<!doctype html>"; then
