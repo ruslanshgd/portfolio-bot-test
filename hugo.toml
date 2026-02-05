@@ -4,8 +4,8 @@ languageCode = "ru-ru"
 defaultContentLanguage = "ru"
 
 [params]
-  author_surname = "Шарипов"
   author_name = "Руслан"
+  author_surname = "Шарипов"
   author_grade = "старший продуктовый дизайнер"
   description = "Кейсы и портфолио"
   author_city = "Санкт-Петербург"
