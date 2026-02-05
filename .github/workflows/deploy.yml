@@ -45,131 +45,71 @@ jobs:
           
           # Create layouts directory if it doesn't exist
           mkdir -p layouts/_default
+          mkdir -p layouts/partials
           
-          # Check and create layouts/index.html if missing
+          # Base64 encoded templates (to avoid YAML syntax issues with Hugo {{ }})
+          # layouts/index.html
+          INDEX_B64="e3sgZGVmaW5lICJtYWluIiB9fQogIDxkaXYgY2xhc3M9ImhvbWUiPgogICAgPGRpdiBjbGFzcz0iaG9tZS1oZXJvLXdyYXAiPgogICAgICA8c2VjdGlvbiBjbGFzcz0iaG9tZS1oZXJvIHBvcnRmb2xpby1jb250ZW50Ij4KICAgICAgICB7eyB3aXRoIHNpdGUuUGFyYW1zLmF1dGhvcl9pbWFnZSB9fQogICAgICAgIDxkaXYgY2xhc3M9ImhvbWUtaGVyb19faW50cm8taW1hZ2UiPgogICAgICAgICAgPGltZyBzcmM9Int7IC4gfCByZWxVUkwgfX0iIGFsdD0ie3sgc2l0ZS5QYXJhbXMuYXV0aG9yX25hbWUgfCBkZWZhdWx0INCQ0LLRgtC+0YAgfX0iPgogICAgICAgIDwvZGl2PgogICAgICAgIHt7IGVuZCB9fQogICAgICAgIDxkaXYgY2xhc3M9ImhvbWUtaGVyb19fY29udGVudCI+CiAgICAgICAgICA8aDEgY2xhc3M9ImhvbWUtaGVyb19fdGl0bGUiPgogICAgICAgICAgICDQn9GA0LjQstC10YIsINGPIHt7IHNpdGUuUGFyYW1zLmF1dGhvcl9uYW1lIHwgZGVmYXVsdCAi0JjQvNGPIiB9fSwge3sgc2l0ZS5QYXJhbXMuYXV0aG9yX2dyYWRlIHwgZGVmYXVsdCAi0L/RgNC+0LTRg9C60YLQvtCy0YvQuSDQtNC40LfQsNC50L3QtdGAIiB9fSA8c3BhbiBjbGFzcz0iaG9tZS1oZXJvX19sb2NhdGlvbiI+8J+TjSB7eyBzaXRlLlBhcmFtcy5hdXRob3JfY2l0eSB8IGRlZmF1bHQgItCT0L7RgNC+0LQiIH19PC9zcGFuPgogICAgICAgICAgPC9oMT4KICAgICAgICAgIHt7IHdpdGggc2l0ZS5QYXJhbXMuYXV0aG9yX2ludHJvIH19CiAgICAgICAgICA8ZGl2IGNsYXNzPSJob21lLWhlcm9fX2ludHJvLXRleHQiPgogICAgICAgICAgICB7eyAuIHwgc2FmZUhUTUwgfX0KICAgICAgICAgIDwvZGl2PgogICAgICAgICAge3sgZW5kIH19CiAgICAgICAgPC9kaXY+CiAgICAgIDwvc2VjdGlvbj4KICAgIDwvZGl2PgogICAge3sgcGFydGlhbCAiY2FyZWVyLXNlY3Rpb24uaHRtbCIgLiB9fQogICAge3sgcGFydGlhbCAiZWR1Y2F0aW9uLXNlY3Rpb24uaHRtbCIgLiB9fQogIDwvZGl2Pgp7eyBlbmQgfX0K"
+          
+          # layouts/_default/baseof.html
+          BASEOF_B64="PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9Int7IHNpdGUuTGFuZ3VhZ2UuTGFuZyB9fSI+CiAgPGhlYWQ+CiAgICB7eyBwYXJ0aWFsICJoZWFkLmh0bWwiIC4gfX0KICA8L2hlYWQ+CiAgPGJvZHk+CiAgICA8ZGl2IGNsYXNzPSJwb3J0Zm9saW8tY29udGFpbmVyIj4KICAgICAgPGhlYWRlciBjbGFzcz0ic2l0ZS1oZWFkZXIgcG9ydGZvbGlvLWNvbnRlbnQiPgogICAgICAgIHt7IHBhcnRpYWwgInNpdGUtaGVhZGVyLmh0bWwiIC4gfX0KICAgICAgPC9oZWFkZXI+CiAgICAgIDxtYWluIGNsYXNzPSJwb3J0Zm9saW8tY29udGVudCI+CiAgICAgICAge3sgYmxvY2sgIm1haW4iIC4gfX17eyBlbmQgfX0KICAgICAgPC9tYWluPgogICAgICA8Zm9vdGVyIGNsYXNzPSJzaXRlLWZvb3RlciBwb3J0Zm9saW8tY29udGVudCI+CiAgICAgICAge3sgcGFydGlhbCAic2l0ZS1oZWFkZXIuaHRtbCIgLiB9fQogICAgICA8L2Zvb3Rlcj4KICAgIDwvZGl2PgogIDwvYm9keT4KPC9odG1sPgo="
+          
+          # layouts/partials/head.html
+          HEAD_B64="PG1ldGEgY2hhcnNldD0idXRmLTgiPgo8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEiPgo8dGl0bGU+e3sgaWYgLklzSG9tZSB9fXt7IHNpdGUuUGFyYW1zLmF1dGhvcl9uYW1lIH19e3sgd2l0aCBzaXRlLlBhcmFtcy5hdXRob3Jfc3VybmFtZSB9fSB7eyAuIH19e3sgZW5kIH19e3sgd2l0aCBzaXRlLlBhcmFtcy5hdXRob3JfZ3JhZGUgfX0g4oCTIHt7IC4gfX17eyBlbmQgfX17eyBlbHNlIH19e3sgLlRpdGxlIH19IHwge3sgc2l0ZS5QYXJhbXMuYXV0aG9yX25hbWUgfX17eyB3aXRoIHNpdGUuUGFyYW1zLmF1dGhvcl9zdXJuYW1lIH19IHt7IC4gfX17eyBlbmQgfX17eyB3aXRoIHNpdGUuUGFyYW1zLmF1dGhvcl9ncmFkZSB9fSDigJMge3sgLiB9fXt7IGVuZCB9fXt7IGVuZCB9fTwvdGl0bGU+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0ie3sgImNzcy9tYWluLmNzcyIgfCByZWxVUkwgfX0iPgo="
+          
+          # layouts/partials/site-header.html
+          SITEHEADER_B64="PG5hdiBjbGFzcz0ic2l0ZS1uYXYiPgogIDxhIGhyZWY9Ii8iIGNsYXNzPSJzaXRlLW5hdl9fbG9nbyI+e3sgc2l0ZS5QYXJhbXMuYXV0aG9yX25hbWUgfX08L2E+CjwvbmF2Pgo="
+          
+          # layouts/partials/career-section.html
+          CAREER_B64="e3sgaWYgc2l0ZS5QYXJhbXMuY2FyZWVyIH19CjxzZWN0aW9uIGNsYXNzPSJjYXJlZXItc2VjdGlvbiBwb3J0Zm9saW8tY29udGVudCI+CiAgPGgyPtCa0LDRgNGM0LXRgNCwPC9oMj4KICB7eyByYW5nZSBzaXRlLlBhcmFtcy5jYXJlZXIuaXRlbXMgfX0KICA8ZGl2IGNsYXNzPSJjYXJlZXItaXRlbSI+CiAgICA8aDM+e3sgLmNvbXBhbnkgfX0gLSB7eyAucm9sZSB9fTwvaDM+CiAgICA8cD57eyAuc3RhcnQgfX0gLSB7eyAuZW5kIH19PC9wPgogICAgPHA+e3sgLmRlc2NyaXB0aW9uIH19PC9wPgogIDwvZGl2PgogIHt7IGVuZCB9fQo8L3NlY3Rpb24+Cnt7IGVuZCB9fQo="
+          
+          # layouts/partials/education-section.html
+          EDUCATION_B64="e3sgaWYgc2l0ZS5QYXJhbXMuZWR1Y2F0aW9uIH19CjxzZWN0aW9uIGNsYXNzPSJlZHVjYXRpb24tc2VjdGlvbiBwb3J0Zm9saW8tY29udGVudCI+CiAgPGgyPtCe0LHRgNCw0LfQvtCy0LDQvdC40LU8L2gyPgogIHt7IHJhbmdlIHNpdGUuUGFyYW1zLmVkdWNhdGlvbi51bml2ZXJzaXRpZXMgfX0KICA8ZGl2IGNsYXNzPSJlZHVjYXRpb24taXRlbSI+CiAgICA8aDM+e3sgLm5hbWUgfX08L2gzPgogICAgPHA+e3sgLmRlZ3JlZSB9fSAtIHt7IC5zcGVjaWFsaXR5IH19PC9wPgogICAgPHA+e3sgLnllYXIgfX08L3A+CiAgPC9kaXY+CiAge3sgZW5kIH19Cjwvc2VjdGlvbj4Ke3sgZW5kIH19Cg=="
+          
+          # Create templates if missing
           if [ ! -f layouts/index.html ]; then
             echo "⚠️ WARNING: layouts/index.html not found, creating basic template..."
-            cat > layouts/index.html << 'EOFTEMPLATE'
-{{ define "main" }}
-  <div class="home">
-    <div class="home-hero-wrap">
-      <section class="home-hero portfolio-content">
-        {{ with site.Params.author_image }}
-        <div class="home-hero__intro-image">
-          <img src="{{ . | relURL }}" alt="{{ site.Params.author_name | default "Автор" }}">
-        </div>
-        {{ end }}
-        <div class="home-hero__content">
-          <h1 class="home-hero__title">
-            Привет, я {{ site.Params.author_name | default "Имя" }}, {{ site.Params.author_grade | default "продуктовый дизайнер" }} <span class="home-hero__location">📍 {{ site.Params.author_city | default "Город" }}</span>
-          </h1>
-          {{ with site.Params.author_intro }}
-          <div class="home-hero__intro-text">
-            {{ . | safeHTML }}
-          </div>
-          {{ end }}
-        </div>
-      </section>
-    </div>
-    {{ partial "career-section.html" . }}
-    {{ partial "education-section.html" . }}
-  </div>
-{{ end }}
-EOFTEMPLATE
+            echo "$INDEX_B64" | base64 -d > layouts/index.html
             echo "✅ Created layouts/index.html"
           else
             echo "✅ layouts/index.html found"
           fi
           
-          # Check and create layouts/_default/baseof.html if missing
           if [ ! -f layouts/_default/baseof.html ]; then
             echo "⚠️ WARNING: layouts/_default/baseof.html not found, creating basic template..."
-            cat > layouts/_default/baseof.html << 'EOFTEMPLATE'
-<!DOCTYPE html>
-<html lang="{{ site.Language.Lang }}">
-  <head>
-    {{ partial "head.html" . }}
-  </head>
-  <body>
-    <div class="portfolio-container">
-      <header class="site-header portfolio-content">
-        {{ partial "site-header.html" . }}
-      </header>
-      <main class="portfolio-content">
-        {{ block "main" . }}{{ end }}
-      </main>
-      <footer class="site-footer portfolio-content">
-        {{ partial "site-header.html" . }}
-      </footer>
-    </div>
-  </body>
-</html>
-EOFTEMPLATE
+            echo "$BASEOF_B64" | base64 -d > layouts/_default/baseof.html
             echo "✅ Created layouts/_default/baseof.html"
           else
             echo "✅ layouts/_default/baseof.html found"
           fi
           
-          # Check for partials directory
-          mkdir -p layouts/partials
           if [ ! -f layouts/partials/head.html ]; then
             echo "⚠️ WARNING: layouts/partials/head.html not found, creating basic template..."
-            cat > layouts/partials/head.html << 'EOFTEMPLATE'
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if .IsHome }}{{ site.Params.author_name }}{{ with site.Params.author_surname }} {{ . }}{{ end }}{{ with site.Params.author_grade }} – {{ . }}{{ end }}{{ else }}{{ .Title }} | {{ site.Params.author_name }}{{ with site.Params.author_surname }} {{ . }}{{ end }}{{ with site.Params.author_grade }} – {{ . }}{{ end }}{{ end }}</title>
-<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-EOFTEMPLATE
+            echo "$HEAD_B64" | base64 -d > layouts/partials/head.html
             echo "✅ Created layouts/partials/head.html"
           fi
           
           if [ ! -f layouts/partials/site-header.html ]; then
             echo "⚠️ WARNING: layouts/partials/site-header.html not found, creating basic template..."
-            cat > layouts/partials/site-header.html << 'EOFTEMPLATE'
-<nav class="site-nav">
-  <a href="/" class="site-nav__logo">{{ site.Params.author_name }}</a>
-</nav>
-EOFTEMPLATE
+            echo "$SITEHEADER_B64" | base64 -d > layouts/partials/site-header.html
             echo "✅ Created layouts/partials/site-header.html"
           fi
           
           if [ ! -f layouts/partials/career-section.html ]; then
             echo "⚠️ WARNING: layouts/partials/career-section.html not found, creating basic template..."
-            cat > layouts/partials/career-section.html << 'EOFTEMPLATE'
-{{ if site.Params.career }}
-<section class="career-section portfolio-content">
-  <h2>Карьера</h2>
-  {{ range site.Params.career.items }}
-  <div class="career-item">
-    <h3>{{ .company }} - {{ .role }}</h3>
-    <p>{{ .start }} - {{ .end }}</p>
-    <p>{{ .description }}</p>
-  </div>
-  {{ end }}
-</section>
-{{ end }}
-EOFTEMPLATE
+            echo "$CAREER_B64" | base64 -d > layouts/partials/career-section.html
             echo "✅ Created layouts/partials/career-section.html"
           fi
           
           if [ ! -f layouts/partials/education-section.html ]; then
             echo "⚠️ WARNING: layouts/partials/education-section.html not found, creating basic template..."
-            cat > layouts/partials/education-section.html << 'EOFTEMPLATE'
-{{ if site.Params.education }}
-<section class="education-section portfolio-content">
-  <h2>Образование</h2>
-  {{ range site.Params.education.universities }}
-  <div class="education-item">
-    <h3>{{ .name }}</h3>
-    <p>{{ .degree }} - {{ .speciality }}</p>
-    <p>{{ .year }}</p>
-  </div>
-  {{ end }}
-</section>
-{{ end }}
-EOFTEMPLATE
+            echo "$EDUCATION_B64" | base64 -d > layouts/partials/education-section.html
             echo "✅ Created layouts/partials/education-section.html"
           fi
+          
+          echo ""
+          echo "📁 Final layouts structure:"
+          find layouts -type f -name "*.html" | head -20
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
