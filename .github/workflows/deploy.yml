@@ -39,6 +39,21 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Check required templates
+        run: |
+          echo "Checking for required Hugo templates:"
+          if [ ! -f layouts/index.html ]; then
+            echo "❌ ERROR: layouts/index.html not found!"
+            echo "This file is required for Hugo to generate index.html"
+            echo "Please ensure your template repository includes layouts/index.html"
+            exit 1
+          fi
+          echo "✅ layouts/index.html found"
+          if [ ! -f layouts/_default/baseof.html ]; then
+            echo "⚠️ WARNING: layouts/_default/baseof.html not found (may be optional)"
+          else
+            echo "✅ layouts/_default/baseof.html found"
+          fi
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
@@ -48,6 +63,43 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Verify build output
+        run: |
+          echo "Checking public directory contents:"
+          ls -la public/ | head -20
+          echo ""
+          echo "Checking for index.html:"
+          ls -la public/index.html || echo "ERROR: index.html not found!"
+          echo ""
+          echo "Checking for index.xml:"
+          ls -la public/index.xml || echo "index.xml not found"
+          echo ""
+          echo "File sizes:"
+          du -h public/index.html public/index.xml 2>/dev/null || echo "Some files missing"
+          echo ""
+          echo "First 5 lines of index.html:"
+          head -5 public/index.html 2>/dev/null || echo "index.html not readable"
+          echo ""
+          echo "Verifying index.html is valid HTML:"
+          if head -1 public/index.html | grep -q "<!DOCTYPE html>"; then
+            echo "✅ index.html starts with DOCTYPE"
+          else
+            echo "❌ ERROR: index.html does not start with DOCTYPE!"
+            exit 1
+          fi
+      - name: Ensure index.html priority
+        run: |
+          # Move RSS feed to feed.xml to avoid conflict with index.html
+          if [ -f public/index.xml ]; then
+            mv public/index.xml public/feed.xml
+            echo "✅ Moved index.xml to feed.xml to ensure index.html priority"
+          fi
+          # Verify index.html exists and is first
+          if [ ! -f public/index.html ]; then
+            echo "❌ ERROR: index.html not found after build!"
+            exit 1
+          fi
+          echo "✅ index.html verified and prioritized"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
