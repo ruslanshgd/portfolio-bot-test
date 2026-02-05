@@ -138,7 +138,7 @@ jobs:
           head -5 public/index.html 2>/dev/null || echo "index.html not readable"
           echo ""
           echo "Verifying index.html is valid HTML:"
-          if head -1 public/index.html | grep -q "<!DOCTYPE html>"; then
+          if head -1 public/index.html | grep -qi "<!doctype html>"; then
             echo "✅ index.html starts with DOCTYPE"
           else
             echo "❌ ERROR: index.html does not start with DOCTYPE!"
