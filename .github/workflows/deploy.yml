@@ -39,20 +39,136 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Check required templates
+      - name: Check and create required templates
         run: |
           echo "Checking for required Hugo templates:"
+          
+          # Create layouts directory if it doesn't exist
+          mkdir -p layouts/_default
+          
+          # Check and create layouts/index.html if missing
           if [ ! -f layouts/index.html ]; then
-            echo "❌ ERROR: layouts/index.html not found!"
-            echo "This file is required for Hugo to generate index.html"
-            echo "Please ensure your template repository includes layouts/index.html"
-            exit 1
+            echo "⚠️ WARNING: layouts/index.html not found, creating basic template..."
+            cat > layouts/index.html << 'EOFTEMPLATE'
+{{ define "main" }}
+  <div class="home">
+    <div class="home-hero-wrap">
+      <section class="home-hero portfolio-content">
+        {{ with site.Params.author_image }}
+        <div class="home-hero__intro-image">
+          <img src="{{ . | relURL }}" alt="{{ site.Params.author_name | default "Автор" }}">
+        </div>
+        {{ end }}
+        <div class="home-hero__content">
+          <h1 class="home-hero__title">
+            Привет, я {{ site.Params.author_name | default "Имя" }}, {{ site.Params.author_grade | default "продуктовый дизайнер" }} <span class="home-hero__location">📍 {{ site.Params.author_city | default "Город" }}</span>
+          </h1>
+          {{ with site.Params.author_intro }}
+          <div class="home-hero__intro-text">
+            {{ . | safeHTML }}
+          </div>
+          {{ end }}
+        </div>
+      </section>
+    </div>
+    {{ partial "career-section.html" . }}
+    {{ partial "education-section.html" . }}
+  </div>
+{{ end }}
+EOFTEMPLATE
+            echo "✅ Created layouts/index.html"
+          else
+            echo "✅ layouts/index.html found"
           fi
-          echo "✅ layouts/index.html found"
+          
+          # Check and create layouts/_default/baseof.html if missing
           if [ ! -f layouts/_default/baseof.html ]; then
-            echo "⚠️ WARNING: layouts/_default/baseof.html not found (may be optional)"
+            echo "⚠️ WARNING: layouts/_default/baseof.html not found, creating basic template..."
+            cat > layouts/_default/baseof.html << 'EOFTEMPLATE'
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body>
+    <div class="portfolio-container">
+      <header class="site-header portfolio-content">
+        {{ partial "site-header.html" . }}
+      </header>
+      <main class="portfolio-content">
+        {{ block "main" . }}{{ end }}
+      </main>
+      <footer class="site-footer portfolio-content">
+        {{ partial "site-header.html" . }}
+      </footer>
+    </div>
+  </body>
+</html>
+EOFTEMPLATE
+            echo "✅ Created layouts/_default/baseof.html"
           else
             echo "✅ layouts/_default/baseof.html found"
+          fi
+          
+          # Check for partials directory
+          mkdir -p layouts/partials
+          if [ ! -f layouts/partials/head.html ]; then
+            echo "⚠️ WARNING: layouts/partials/head.html not found, creating basic template..."
+            cat > layouts/partials/head.html << 'EOFTEMPLATE'
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Params.author_name }}{{ with site.Params.author_surname }} {{ . }}{{ end }}{{ with site.Params.author_grade }} – {{ . }}{{ end }}{{ else }}{{ .Title }} | {{ site.Params.author_name }}{{ with site.Params.author_surname }} {{ . }}{{ end }}{{ with site.Params.author_grade }} – {{ . }}{{ end }}{{ end }}</title>
+<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+EOFTEMPLATE
+            echo "✅ Created layouts/partials/head.html"
+          fi
+          
+          if [ ! -f layouts/partials/site-header.html ]; then
+            echo "⚠️ WARNING: layouts/partials/site-header.html not found, creating basic template..."
+            cat > layouts/partials/site-header.html << 'EOFTEMPLATE'
+<nav class="site-nav">
+  <a href="/" class="site-nav__logo">{{ site.Params.author_name }}</a>
+</nav>
+EOFTEMPLATE
+            echo "✅ Created layouts/partials/site-header.html"
+          fi
+          
+          if [ ! -f layouts/partials/career-section.html ]; then
+            echo "⚠️ WARNING: layouts/partials/career-section.html not found, creating basic template..."
+            cat > layouts/partials/career-section.html << 'EOFTEMPLATE'
+{{ if site.Params.career }}
+<section class="career-section portfolio-content">
+  <h2>Карьера</h2>
+  {{ range site.Params.career.items }}
+  <div class="career-item">
+    <h3>{{ .company }} - {{ .role }}</h3>
+    <p>{{ .start }} - {{ .end }}</p>
+    <p>{{ .description }}</p>
+  </div>
+  {{ end }}
+</section>
+{{ end }}
+EOFTEMPLATE
+            echo "✅ Created layouts/partials/career-section.html"
+          fi
+          
+          if [ ! -f layouts/partials/education-section.html ]; then
+            echo "⚠️ WARNING: layouts/partials/education-section.html not found, creating basic template..."
+            cat > layouts/partials/education-section.html << 'EOFTEMPLATE'
+{{ if site.Params.education }}
+<section class="education-section portfolio-content">
+  <h2>Образование</h2>
+  {{ range site.Params.education.universities }}
+  <div class="education-item">
+    <h3>{{ .name }}</h3>
+    <p>{{ .degree }} - {{ .speciality }}</p>
+    <p>{{ .year }}</p>
+  </div>
+  {{ end }}
+</section>
+{{ end }}
+EOFTEMPLATE
+            echo "✅ Created layouts/partials/education-section.html"
           fi
       - name: Build with Hugo
         env:
